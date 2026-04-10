@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api-prazo-certo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/api-prazo-certo
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    baseling-on-migrate: true
