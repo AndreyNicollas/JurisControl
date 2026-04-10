@@ -1,6 +1,6 @@
 -- 1. Criação da tabela USUARIO (Advogado)
 CREATE TABLE usuario (
-                         id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                         id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
                          nome VARCHAR(150) NOT NULL,
                          email VARCHAR(150) UNIQUE NOT NULL,
                          cpf VARCHAR(14) UNIQUE,
@@ -12,8 +12,8 @@ CREATE TABLE usuario (
 
 -- 2. Criação da tabela CLIENTE
 CREATE TABLE cliente (
-                         id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                         usuario_id BIGINT NOT NULL,
+                         id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+                         usuario_id UUID NOT NULL,
                          nome VARCHAR(150) NOT NULL,
                          cpf_cnpj VARCHAR(18) NOT NULL,
                          telefone VARCHAR(20),
@@ -24,9 +24,9 @@ CREATE TABLE cliente (
 
 -- 3. Criação da tabela PROCESSO
 CREATE TABLE processo (
-                          id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                          usuario_id BIGINT NOT NULL,
-                          cliente_id BIGINT NOT NULL,
+                          id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+                          usuario_id UUID NOT NULL,
+                          cliente_id UUID NOT NULL,
                           numero_processo VARCHAR(50) NOT NULL,
                           comarca VARCHAR(100) NOT NULL,
                           vara VARCHAR(100),
@@ -39,8 +39,8 @@ CREATE TABLE processo (
 
 -- 4. Criação da tabela PRAZO
 CREATE TABLE prazo (
-                       id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                       processo_id BIGINT NOT NULL,
+                       id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+                       processo_id UUID NOT NULL,
                        descricao VARCHAR(255) NOT NULL,
                        data_vencimento DATE NOT NULL,
                        prioridade VARCHAR(20) DEFAULT 'media',
@@ -52,7 +52,7 @@ CREATE TABLE prazo (
 
 -- 5. Criação da tabela FERIADO
 CREATE TABLE feriado (
-                         id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                         id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
                          data_feriado DATE NOT NULL,
                          descricao VARCHAR(150) NOT NULL,
                          abrangencia VARCHAR(30) NOT NULL
@@ -60,8 +60,8 @@ CREATE TABLE feriado (
 
 -- 6. Criação da tabela ALERTA
 CREATE TABLE alerta (
-                        id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                        prazo_id BIGINT NOT NULL,
+                        id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+                        prazo_id UUID NOT NULL,
                         canal VARCHAR(20) NOT NULL,
                         status VARCHAR(20) NOT NULL,
                         data_agendamento TIMESTAMP NOT NULL,
