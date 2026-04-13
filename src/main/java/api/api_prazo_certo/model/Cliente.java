@@ -3,7 +3,7 @@ package api.api_prazo_certo.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -32,7 +32,7 @@ public class Cliente {
     private String email;
 
     @Column(name = "data_cadastro", updatable = false)
-    private LocalDate dataCadastro;
+    private LocalDateTime dataCadastro;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -40,6 +40,6 @@ public class Cliente {
 
     @PrePersist
     protected void onCreate() {
-        this.dataCadastro = LocalDate.now();
+        this.dataCadastro = LocalDateTime.now();
     }
 }
