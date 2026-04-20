@@ -20,3 +20,8 @@ spring:
   flyway:
     enabled: true
     baseling-on-migrate: true
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:long-secret-key-api-prazo-certo}

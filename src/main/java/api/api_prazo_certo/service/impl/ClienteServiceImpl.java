@@ -42,7 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public ClienteResponseDto update(UUID id, ClienteRequestDto  clienteRequestDto) {
+    public ClienteResponseDto update(UUID id, ClienteRequestDto clienteRequestDto) {
         var existingCliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("O cliente não foi encontrado."));
 
