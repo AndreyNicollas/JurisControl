@@ -1,0 +1,58 @@
+package api.api_prazo_certo.controller;
+
+import api.api_prazo_certo.config.security.AuthenticationDto;
+import api.api_prazo_certo.config.security.TokenService;
+import api.api_prazo_certo.dto.request.UsuarioRequestDto;
+import api.api_prazo_certo.dto.response.LoginResponseDto;
+import api.api_prazo_certo.enums.UsuarioRole;
+import api.api_prazo_certo.model.Usuario;
+import api.api_prazo_certo.repository.UsuarioRepository;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("auth")
+@RequiredArgsConstructor
+public class AuthenticationController {
+
+    private final AuthenticationManager authenticationManager;
+    private final UsuarioRepository usuarioRepository;
+    private final TokenService tokenService;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDto authenticationDto) {
+        var usuarioNamePassword = new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.senha());
+        var auth = this.authenticationManager.authenticate(usuarioNamePassword);
+
+        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDto(token));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody @Valid UsuarioRequestDto  usuarioRequestDto) {
+        if (this.usuarioRepository.findByEmail(usuarioRequestDto.email()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: E-mail já cadastro no sistema.");
+        }
+        String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioRequestDto.senha());
+        Usuario newUsuario = Usuario.builder()
+                .nome(usuarioRequestDto.nome())
+                .email(usuarioRequestDto.email())
+                .cpf(usuarioRequestDto.cpf())
+                .numeroOab(usuarioRequestDto.numeroOab())
+                .senha(encryptedPassword)
+                .cidade(usuarioRequestDto.cidade())
+                .role(UsuarioRole.USUARIO)
+                .build();
+        usuarioRepository.save(newUsuario);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+}

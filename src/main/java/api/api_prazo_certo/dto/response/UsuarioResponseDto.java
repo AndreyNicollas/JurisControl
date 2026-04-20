@@ -1,5 +1,6 @@
 package api.api_prazo_certo.dto.response;
 
+import api.api_prazo_certo.enums.UsuarioRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.UUID;
@@ -10,5 +11,6 @@ public record UsuarioResponseDto(
         String nome,
         String email,
         String numeroOab,
-        String cidade
+        String cidade,
+        UsuarioRole role
 ) {}

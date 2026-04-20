@@ -1,6 +1,8 @@
 package api.api_prazo_certo.dto.request;
 
+import api.api_prazo_certo.enums.UsuarioRole;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDto(
@@ -18,8 +20,11 @@ public record UsuarioRequestDto(
 
         @NotBlank(message = "A senha é obrigatória.")
         @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres.")
-        String senhaHash,
+        String senha,
 
         @NotBlank(message = "O campo cidade é obrigatório.")
-        String cidade
+        String cidade,
+
+        @NotNull(message = "A Role do Usuário deve ser informada!")
+        UsuarioRole role
 ) {}
