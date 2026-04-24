@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
 
-                    authorize.requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/api-prazo-certo/auth/register", "/api-prazo-certo/auth/login").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

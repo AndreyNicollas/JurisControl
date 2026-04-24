@@ -16,8 +16,5 @@ public record ClienteRequestDto(
         String telefone,
 
         @NotBlank(message = "O campo email é obrigatório.")
-        String email,
-
-        @NotNull(message = "O ID do usuário é obrigatório")
-        UUID usuarioId
+        String email
 ) {}

@@ -1,5 +1,6 @@
 package api.api_prazo_certo.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.UUID;
@@ -11,5 +12,7 @@ public record ClienteResponseDto(
         String cpfCnpj,
         String telefone,
         String email,
+
+        @JsonIgnoreProperties({"cidade", "role"})
         UsuarioResponseDto usuario
 ) {}
