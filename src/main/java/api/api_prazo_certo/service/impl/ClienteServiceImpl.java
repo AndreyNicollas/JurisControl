@@ -34,7 +34,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Page<ClienteResponseDto> findAll(Pageable pageable) {
-        return clienteRepository.findAllByUsuario(getUsuarioLogin(), pageable).map(clienteMapper::toResponse);
+        return clienteRepository.findAllByUsuario(getUsuarioLogin(), pageable)
+                    .map(clienteMapper::toResponse);
     }
 
     @Override

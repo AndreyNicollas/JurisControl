@@ -1,7 +1,11 @@
 package api.api_prazo_certo.model;
 
+import api.api_prazo_certo.enums.StatusProcesso;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,7 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Processo {
 
     @Id
@@ -31,10 +34,11 @@ public class Processo {
     @Column(name = "tipo_acao", length = 100)
     private String tipoAcao;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private String status;
+    private StatusProcesso status;
 
-    @Column(name = "data_cadastro", updatable = false, insertable = false)
+    @Column(name = "data_cadastro", updatable = false)
     private LocalDateTime dataCadastro;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,6 +52,6 @@ public class Processo {
     @PrePersist
     protected void onCreate() {
         this.dataCadastro = LocalDateTime.now();
-        if (this.status == null) this.status = "ativo";
+        if (this.status == null) this.status = StatusProcesso.ATIVO;
     }
 }
