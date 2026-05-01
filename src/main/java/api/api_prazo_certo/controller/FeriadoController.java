@@ -27,7 +27,7 @@ public class FeriadoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<FeriadoResponseDto>> findAllFeriados(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<FeriadoResponseDto>> findAllFeriados(@PageableDefault(size = 10) Pageable pageable) {
         var feriados = feriadoService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(feriados);
     }

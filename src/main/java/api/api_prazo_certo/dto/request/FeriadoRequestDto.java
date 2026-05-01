@@ -1,5 +1,6 @@
 package api.api_prazo_certo.dto.request;
 
+import api.api_prazo_certo.enums.AbrangenciaFeriado;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,6 +13,6 @@ public record FeriadoRequestDto(
         @NotBlank(message = "A descrição do feriado é obrigatória.")
         String descricao,
 
-        @NotBlank(message = "A abrangência é obrigatória (Nacional, Estadual ou Municipal).")
-        String abrangencia
+        @NotNull(message = "A abrangência é obrigatória (Nacional, Estadual ou Municipal).")
+        AbrangenciaFeriado abrangencia
 ) {}

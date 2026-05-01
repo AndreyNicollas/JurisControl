@@ -1,5 +1,6 @@
 package api.api_prazo_certo.model;
 
+import api.api_prazo_certo.enums.AbrangenciaFeriado;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Feriado {
 
     @Id
@@ -25,6 +25,7 @@ public class Feriado {
     @Column(nullable = false, length = 150)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private String abrangencia;
+    private AbrangenciaFeriado abrangencia;
 }

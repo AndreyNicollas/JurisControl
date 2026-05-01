@@ -50,7 +50,7 @@ public class Processo {
     private Cliente cliente;
 
     @PrePersist
-    protected void onCreate() {
+    protected void prePersist() {
         this.dataCadastro = LocalDateTime.now();
         if (this.status == null) this.status = StatusProcesso.ATIVO;
     }
