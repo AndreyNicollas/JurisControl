@@ -1,5 +1,6 @@
 package api.api_prazo_certo.dto.response;
 
+import api.api_prazo_certo.enums.AbrangenciaFeriado;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDate;
@@ -10,5 +11,5 @@ public record FeriadoResponseDto(
         UUID id,
         LocalDate dataFeriado,
         String descricao,
-        String abrangencia
+        AbrangenciaFeriado abrangencia
 ) {}

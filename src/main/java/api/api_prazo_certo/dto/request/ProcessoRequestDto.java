@@ -1,5 +1,6 @@
 package api.api_prazo_certo.dto.request;
 
+import api.api_prazo_certo.enums.StatusProcesso;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
