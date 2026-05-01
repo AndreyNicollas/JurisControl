@@ -16,4 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
     Page<Cliente> findAllByUsuario(Usuario usuario, Pageable pageable);
 
     Optional<Cliente> findByIdAndUsuario(UUID id, Usuario usuario);
+
+    // faz contagem dos clientes do usuario (advogado)
+    long countByUsuario(Usuario usuario);
 }
