@@ -1,5 +1,6 @@
 package api.api_prazo_certo.repository;
 
+import api.api_prazo_certo.enums.StatusProcesso;
 import api.api_prazo_certo.model.Processo;
 import api.api_prazo_certo.model.Usuario;
 import org.springframework.data.domain.Page;
@@ -18,4 +19,7 @@ public interface ProcessoRepository extends JpaRepository<Processo, UUID> {
     Page<Processo> findAllByClienteIdAndUsuario(UUID clienteId, Usuario usuario, Pageable pageable);
 
     Optional<Processo> findByIdAndUsuario(UUID id, Usuario usuario);
+
+    // faz contagem dos processos ativos do usuario (advogado)
+    long countByUsuarioAndStatus(Usuario usuario, StatusProcesso status);
 }
