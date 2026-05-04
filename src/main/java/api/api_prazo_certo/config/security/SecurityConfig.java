@@ -38,7 +38,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
 
-                    authorize.requestMatchers(HttpMethod.POST, "/api-prazo-certo/auth/register", "/api-prazo-certo/auth/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/v1/juris-alerta/auth/register", "/v1/juris-alerta/auth/login").permitAll();
+                    authorize.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

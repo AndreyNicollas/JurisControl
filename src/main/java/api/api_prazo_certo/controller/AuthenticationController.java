@@ -7,6 +7,9 @@ import api.api_prazo_certo.dto.response.LoginResponseDto;
 import api.api_prazo_certo.enums.UsuarioRole;
 import api.api_prazo_certo.model.Usuario;
 import api.api_prazo_certo.repository.UsuarioRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,14 +23,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api-prazo-certo/auth")
+@RequestMapping("/v1/juris-alerta/auth")
 @RequiredArgsConstructor
+@Tag(name = "Autenticação", description = "Endpoints para registro e login de novos advogados por meio de Token JWT.")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
     private final TokenService tokenService;
 
+    @SecurityRequirements()
+    @Operation(summary = "Login de Usuario/Advogado.",
+            description = "Autenticação do advogado com e-mail e senha, retornando o Token Bearer para consumo na API.")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDto authenticationDto) {
         var usuarioNamePassword = new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.senha());
@@ -37,6 +44,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
+    @SecurityRequirements()
+    @Operation(summary = "Registro de novo Usuario/Advogado.",
+            description = "Faz o registro de um novo Usuário/Advogado na API.")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UsuarioRequestDto  usuarioRequestDto) {
         if (this.usuarioRepository.findByEmail(usuarioRequestDto.email()) != null) {
