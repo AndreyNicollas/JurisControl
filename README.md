@@ -72,7 +72,7 @@ Co-autor e colaborador no desenvolvimento.\
 https://github.com/1colossos
 
 - **Adrian Raul**\
-Co-autor e colaborador no desenvolviemnto.\
+Co-autor e colaborador no desenvolvimento.\
 https://github.com/adrianRaulDev
 
 
