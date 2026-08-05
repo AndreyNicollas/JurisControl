@@ -13,5 +13,7 @@ public interface FeriadoMapper {
     FeriadoResponseDto toResponse(Feriado feriado);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "criadoEm", ignore = true)
+    @Mapping(target = "atualizadoEm", ignore = true)
     Feriado toEntity(FeriadoRequestDto feriadoRequestDto);
 }

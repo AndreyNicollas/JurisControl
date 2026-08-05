@@ -13,7 +13,8 @@ public interface PrazoMapper {
     PrazoResponseDto toResponse(Prazo prazo);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "dataCriacao", ignore = true)
+    @Mapping(target = "criadoEm", ignore = true)
+    @Mapping(target = "atualizdoEm", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "processo", ignore = true)
     @Mapping(target = "dataVencimento", ignore = true)

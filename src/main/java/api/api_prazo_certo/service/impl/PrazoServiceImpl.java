@@ -3,6 +3,7 @@ package api.api_prazo_certo.service.impl;
 import api.api_prazo_certo.config.security.SecurityUtils;
 import api.api_prazo_certo.dto.request.PrazoRequestDto;
 import api.api_prazo_certo.dto.response.PrazoResponseDto;
+import api.api_prazo_certo.enums.StatusPrazo;
 import api.api_prazo_certo.mappers.PrazoMapper;
 import api.api_prazo_certo.model.Prazo;
 import api.api_prazo_certo.model.Processo;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -40,13 +42,14 @@ public class PrazoServiceImpl implements PrazoService {
         Processo processoVinculado = processoRepository.findByIdAndUsuario(dto.processoId(), usuarioLogin)
                 .orElseThrow(() -> new RuntimeException("O processo não foi encontrado ou acesso negado."));
 
-        LocalDate dataVencimentoCalculado = calculoDataVencimento(dto.dataInicio(),
+        LocalDateTime dataVencimentoCalculado = calculoDataVencimento(dto.dataInicio(),
                 dto.quantidadeDias(), dto.somenteDiasUteis());
 
         Prazo prazoEntity = prazoMapper.toEntity(dto);
 
         prazoEntity.setDataVencimento(dataVencimentoCalculado);
         prazoEntity.setProcesso(processoVinculado);
+        prazoEntity.setStatus(StatusPrazo.PENDENTE);
 
         var savePrazo = prazoRepository.save(prazoEntity);
         return prazoMapper.toResponse(savePrazo);
@@ -75,14 +78,18 @@ public class PrazoServiceImpl implements PrazoService {
         Processo processoVinculado = processoRepository.findByIdAndUsuario(dto.processoId(), usuarioLogin)
                 .orElseThrow(() -> new RuntimeException("O processo não foi encontrado ou acesso negado."));
 
-        LocalDate dataVencimentoCalculado = calculoDataVencimento(dto.dataInicio(),
+        LocalDateTime dataVencimentoCalculado = calculoDataVencimento(dto.dataInicio(),
                 dto.quantidadeDias(), dto.somenteDiasUteis());
 
 
         prazo.setDescricao(dto.descricao());
+        prazo.setDataInicio(dto.dataInicio());
+        prazo.setQuantidadeDias(dto.quantidadeDias());
         prazo.setDataVencimento(dataVencimentoCalculado);
+//      prazo.setDataConclusaoReal(dto.dataConclusaoReal());
         prazo.setPrioridade(dto.prioridade());
         prazo.setSomenteDiasUteis(dto.somenteDiasUteis());
+        prazo.setObservacao(dto.observacao());
         prazo.setProcesso(processoVinculado);
 
         var prazoAtualizado = prazoRepository.save(prazo);
@@ -105,10 +112,10 @@ public class PrazoServiceImpl implements PrazoService {
     }
 
     // calculo para os dias uteis da semana e feriados adicionados dentro do BD
-    private LocalDate calculoDataVencimento(LocalDate dataInicial, int diasUteis, boolean somenteDiasUteis) {
+    private LocalDateTime calculoDataVencimento(LocalDate dataInicial, int diasUteis, boolean somenteDiasUteis) {
 
         if (!somenteDiasUteis) {
-            return dataInicial.plusDays(diasUteis);
+            return dataInicial.plusDays(diasUteis).atTime(23, 59, 59);
         }
 
         LocalDate dataCalculada = dataInicial;
@@ -126,6 +133,6 @@ public class PrazoServiceImpl implements PrazoService {
                 diasAdicionados++;
             }
         }
-        return dataCalculada;
+        return dataCalculada.atTime(23, 59, 59);
     }
 }

@@ -41,6 +41,8 @@ public class FeriadoServiceImpl implements FeriadoService {
         existingFeriado.setDataFeriado(feriadoRequestDto.dataFeriado());
         existingFeriado.setDescricao(feriadoRequestDto.descricao());
         existingFeriado.setAbrangencia(feriadoRequestDto.abrangencia());
+        existingFeriado.setUf(feriadoRequestDto.uf());
+        existingFeriado.setMunicipio(feriadoRequestDto.municipio());
 
         return feriadoMapper.toResponse(feriadoRepository.save(existingFeriado));
     }

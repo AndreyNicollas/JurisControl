@@ -13,7 +13,8 @@ public interface ClienteMapper {
     ClienteResponseDto toResponse(Cliente cliente);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "dataCadastro", ignore = true)
+    @Mapping(target = "criadoEm", ignore = true)
+    @Mapping(target = "atualizadoEm", ignore = true)
     @Mapping(target = "usuario", ignore = true)
     Cliente toEntity(ClienteRequestDto clienteRequestDto);
 }

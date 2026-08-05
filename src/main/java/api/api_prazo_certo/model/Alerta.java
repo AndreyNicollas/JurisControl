@@ -11,8 +11,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Alerta {
 
     @Id
@@ -21,6 +19,9 @@ public class Alerta {
 
     @Column(nullable = false, length = 20)
     private String canal;
+
+    @Column(name = "tipo_notificacao", nullable = false)
+    private String tipoNotificacao;
 
     @Column(nullable = false, length = 20)
     private String status;
@@ -34,4 +35,25 @@ public class Alerta {
     @Column(name = "log_mensagem", columnDefinition = "TEXT")
     private String logMensagem;
 
+    @Column(name = "criado_em", updatable = false, nullable = false)
+    private LocalDateTime criadoEm;
+
+    @Column(name = "atualizado_em", nullable = false)
+    private LocalDateTime atualizadoEm;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prazo_id", nullable = false)
+    private Prazo prazo;
+
+    @PrePersist
+    protected void prePersist() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        this.criadoEm = localDateTime;
+        this.atualizadoEm = localDateTime;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.atualizadoEm = LocalDateTime.now();
+    }
 }

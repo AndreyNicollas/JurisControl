@@ -14,5 +14,11 @@ public record FeriadoRequestDto(
         String descricao,
 
         @NotNull(message = "A abrangência é obrigatória (Nacional, Estadual ou Municipal).")
-        AbrangenciaFeriado abrangencia
+        AbrangenciaFeriado abrangencia,
+
+        @NotBlank(message = "A UF é obrigatória.")
+        String uf,
+
+        @NotBlank(message = "O município é obrigatório.")
+        String municipio
 ) {}

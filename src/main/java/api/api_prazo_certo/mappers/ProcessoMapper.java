@@ -7,13 +7,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ClienteMapper.class})
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {ClienteMapper.class, UsuarioMapper.class})
 public interface ProcessoMapper {
 
     ProcessoResponseDto toResponse(Processo processo);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "dataCadastro", ignore = true)
+    @Mapping(target = "criadoEm", ignore = true)
+    @Mapping(target = "atualizadoEm", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "usuario", ignore = true)
     @Mapping(target = "cliente", ignore = true)

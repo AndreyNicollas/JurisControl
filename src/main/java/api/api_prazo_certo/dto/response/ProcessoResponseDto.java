@@ -2,6 +2,7 @@ package api.api_prazo_certo.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,8 +12,14 @@ public record ProcessoResponseDto(
         String numeroProcesso,
         String comarca,
         String vara,
+        String instancia,
+        String poloCliente,
         String tipoAcao,
+        BigDecimal valorCausa,
+        String linkTribunal,
         String status,
-        LocalDateTime dataCadastro,
+        LocalDateTime criadoEm,
+        LocalDateTime atualizadoEm,
+        UsuarioResponseDto usuario,
         ClienteResponseDto cliente
 ) {}

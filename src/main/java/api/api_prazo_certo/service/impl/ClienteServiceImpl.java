@@ -46,8 +46,17 @@ public class ClienteServiceImpl implements ClienteService {
 
         existingCliente.setNome(clienteRequestDto.nome());
         existingCliente.setCpfCnpj(clienteRequestDto.cpfCnpj());
+        existingCliente.setTipoPessoa(clienteRequestDto.tipoPessoa());
+        existingCliente.setEstadoCivil(clienteRequestDto.estadoCivil());
+        existingCliente.setProfissao(clienteRequestDto.profissao());
         existingCliente.setTelefone(clienteRequestDto.telefone());
         existingCliente.setEmail(clienteRequestDto.email());
+        existingCliente.setCep(clienteRequestDto.cep());
+        existingCliente.setLogradouro(clienteRequestDto.logradouro());
+        existingCliente.setNumero(clienteRequestDto.numero());
+        existingCliente.setBairro(clienteRequestDto.bairro());
+        existingCliente.setCidade(clienteRequestDto.cidade());
+        existingCliente.setUf(clienteRequestDto.uf());
 
         var clienteAtualizado = clienteRepository.save(existingCliente);
         return clienteMapper.toResponse(clienteAtualizado);

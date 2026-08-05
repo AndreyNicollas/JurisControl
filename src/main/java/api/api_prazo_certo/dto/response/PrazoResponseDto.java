@@ -5,7 +5,6 @@ import api.api_prazo_certo.enums.StatusPrazo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,12 +12,17 @@ import java.util.UUID;
 public record PrazoResponseDto(
         UUID id,
         String descricao,
-        LocalDate dataVencimento,
+        LocalDateTime dataInicio,
+        Integer quantidadeDias,
+        LocalDateTime dataVencimento,
+        LocalDateTime dataConclusaoReal,
         PrioridadePrazo prioridade,
         Boolean somenteDiasUteis,
         StatusPrazo status,
-        LocalDateTime dataCriacao,
+        String observacao,
+        LocalDateTime criadoEm,
+        LocalDateTime atualizadoEm,
 
-        @JsonIgnoreProperties({"comarca", "vara", "tipoAcao", "status", "dataCadastro", "cliente"})
+//      @JsonIgnoreProperties({"comarca", "vara", "tipoAcao", "status", "dataCadastro", "cliente"})
         ProcessoResponseDto processo
 ) {}

@@ -52,13 +52,13 @@ public class AuthenticationController {
         if (this.usuarioRepository.findByEmail(usuarioRequestDto.email()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro: E-mail já cadastro no sistema.");
         }
-        String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioRequestDto.senha());
+        String encryptedPassword = new BCryptPasswordEncoder().encode(usuarioRequestDto.password());
         Usuario newUsuario = Usuario.builder()
                 .nome(usuarioRequestDto.nome())
                 .email(usuarioRequestDto.email())
                 .cpf(usuarioRequestDto.cpf())
                 .numeroOab(usuarioRequestDto.numeroOab())
-                .senha(encryptedPassword)
+                .password(encryptedPassword)
                 .cidade(usuarioRequestDto.cidade())
                 .role(UsuarioRole.USUARIO)
                 .build();

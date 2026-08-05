@@ -18,13 +18,24 @@ public record UsuarioRequestDto(
         @NotBlank(message = "O campo número da OAB é obrigatório.")
         String numeroOab,
 
+        @NotBlank(message = "A UF da OAB é obrigatória")
+        @Size(min = 2, max = 2, message = "A UF deve ter 2 caracteres")
+        String ufOab,
+
+        @NotBlank(message = "A especialidade principal é obrigatória.")
+        String especialidadePrincipal,
+
+        @NotBlank(message = "O telefone celular é obrigatório.")
+        String telefoneCelular,
+
         @NotBlank(message = "A senha é obrigatória.")
         @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres.")
-        String senha,
+        String password,
+
+        @NotNull(message = "A Role do Usuário deve ser informada.")
+        UsuarioRole role,
 
         @NotBlank(message = "O campo cidade é obrigatório.")
-        String cidade,
-
-        @NotNull(message = "A Role do Usuário deve ser informada!")
-        UsuarioRole role
-) {}
+        String cidade
+) {
+}

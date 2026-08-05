@@ -2,8 +2,10 @@ package api.api_prazo_certo.model;
 
 import api.api_prazo_certo.enums.UsuarioRole;
 import jakarta.persistence.*;
-import lombok.*;
-import org.jspecify.annotations.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +21,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario implements UserDetails {
 
     @Id
@@ -32,34 +33,59 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(unique = true, length = 14)
+    @Column(nullable = false, unique = true, length = 14)
     private String cpf;
 
     @Column(name = "numero_oab", nullable = false, length = 20)
     private String numeroOab;
 
-    @Column(name = "senha_hash", nullable = false, length = 255)
-    private String senha;
+    @Column(name = "uf_oab", nullable = false, length = 2)
+    private String ufOab;
+
+    @Column(name = "especialidade_principal", nullable = false, length = 100)
+    private String especialidadePrincipal;
+
+    @Column(name = "telefone_celular", nullable = false, length = 20)
+    private String telefoneCelular;
+
+    @Column(nullable = false, length = 255)
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private UsuarioRole role;
 
-    @Column(length = 100)
+    @Column(nullable = false, length = 100)
     private String cidade;
 
-    private LocalDateTime dataCriacao;
+    @Column(name = "criado_em", updatable = false, nullable = false)
+    private LocalDateTime criadoEm;
+
+    @Column(name = "atualizado_em", nullable = false)
+    private LocalDateTime atualizadoEm;
 
     @PrePersist
-    protected void onCreate() {
-        this.dataCriacao = LocalDateTime.now();;
+    public void prePersist() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        this.criadoEm = localDateTime;
+        this.atualizadoEm = localDateTime;
     }
 
-    public Usuario(String nome, String email, String cpf, String senha, UsuarioRole role) {
+    @PreUpdate
+    public void preUpdate() {
+        this.atualizadoEm = LocalDateTime.now();
+    }
+
+    public Usuario(String nome, String email, String cpf, String numeroOab, String ufOab, String especialidadePrincipal, String telefoneCelular, String password, UsuarioRole role, String cidade) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.senha = senha;
+        this.numeroOab = numeroOab;
+        this.ufOab = ufOab;
+        this.especialidadePrincipal = especialidadePrincipal;
+        this.telefoneCelular = telefoneCelular;
+        this.password = password;
         this.role = role;
+        this.cidade = cidade;
     }
 
     @Override
@@ -73,7 +99,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return this.password;
     }
 
     @Override

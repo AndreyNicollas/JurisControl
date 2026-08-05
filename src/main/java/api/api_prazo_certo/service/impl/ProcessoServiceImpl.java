@@ -70,7 +70,11 @@ public class ProcessoServiceImpl implements ProcessoService {
         processo.setNumeroProcesso(dto.numeroProcesso());
         processo.setComarca(dto.comarca());
         processo.setVara(dto.vara());
+        processo.setInstancia(dto.instancia());
+        processo.setPoloCliente(dto.poloCliente());
         processo.setTipoAcao(dto.tipoAcao());
+        processo.setValorCausa(dto.valorCausa());
+        processo.setLinkTribunal(dto.linkTribunal());
         processo.setCliente(clienteVinculado);
 
         var processoAtualizado = processoRepository.save(processo);
